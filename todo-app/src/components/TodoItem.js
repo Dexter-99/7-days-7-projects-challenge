@@ -34,7 +34,8 @@ class TodoItem extends Component {
 }
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  key: PropTypes.number.isRequired
+  onHandleCompleted: PropTypes.func.isRequired,
+  onHandleDelete: PropTypes.func.isRequired
 };
 
 export default TodoItem;
