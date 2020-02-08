@@ -16,6 +16,7 @@ body {
 }
 .logo {
   font-size: 2rem;
+  padding-top: 1rem;
   text-align: center;
   color: white;
   vertical-align: baseline;
@@ -37,7 +38,15 @@ body {
 .fas {
   margin: 0.5rem;
 }
+.page-no {
+  padding-top: 1.5rem;
+}
 canvas {
   height: 100%;
   width: 100%;
+}
+.error {
+  padding: 1.5rem;
+  background: red;
+  display: none;
 }

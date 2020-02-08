@@ -2,8 +2,6 @@ const url = "./docs/syllabus.pdf";
 
 let pdfDoc;
 let pageNum = 1;
-let pageIsRendering = true;
-let pageNumIsPending = null;
 
 const scale = 3.0;
 
@@ -12,7 +10,6 @@ const ctx = canvas.getContext("2d");
 
 //Render Page
 const renderPage = num => {
-  pageIsRendering = true;
   pdfDoc.getPage(num).then(page => {
     const viewport = page.getViewport({ scale: scale });
     canvas.height = viewport.height;
@@ -21,48 +18,46 @@ const renderPage = num => {
       canvasContext: ctx,
       viewport: viewport
     };
-    page.render(renderContext).promise.then(() => {
-      pageIsRendering = false;
-      if (pageNumIsPending !== null) {
-        renderPage(pageNumIsPending);
-        pageNumIsPending = null;
-      }
-    });
-    //Output current page
+    page.render(renderContext);
+
     document.getElementById("page-num").textContent = num;
   });
 };
 
 //Check for PageRendering
-const queueRendering = num => {
-  if (pageIsRendering) {
-    pageNumIsPending = num;
-  } else {
-    renderPage(num);
-  }
+const pageRendering = num => {
+  renderPage(num);
 };
 
 //get Pdf
-pdfjsLib.getDocument(url).promise.then(pdf => {
-  pdfDoc = pdf;
-  //display Number of pages
-  document.getElementById("page-count").textContent = pdfDoc.numPages;
-  renderPage(pageNum);
-});
+pdfjsLib
+  .getDocument(url)
+  .promise.then(pdf => {
+    pdfDoc = pdf;
+    //display Number of pages
+    console.log("getPdf");
+    document.getElementById("page-count").textContent = pdfDoc.numPages;
+    renderPage(pageNum);
+  })
+  .catch(err => {
+    console.log(err);
+    document.querySelector(".top-bar").style.display = "none";
+    document.querySelector(".err-text").textContent = err.message;
+    document.querySelector(".error").style.display = "block";
+  });
 
 //showPrevPage
 showPrevPage = () => {
   if (pageNum <= 1) return;
   pageNum--;
-  console.log(pageNum);
-  queueRendering(pageNum);
+  pageRendering(pageNum);
 };
 //showNextPage
 showNextPage = () => {
   if (pageNum >= pdfDoc.numPages) return;
   pageNum++;
-  console.log(pageNum);
-  queueRendering(pageNum);
+
+  pageRendering(pageNum);
 };
 
 document.getElementById("prev-page").addEventListener("click", showPrevPage);
