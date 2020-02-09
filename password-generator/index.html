@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/6411353ab6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Password-generator</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="text-align: center;margin-bottom:1rem">Paasword Generator</h1>
+      <div class="password-container">
+        <p id="result"></p>
+        <button class="clipboard-btn" id="clipboard">
+          <i class="fas fa-clipboard"></i>
+        </button>
+      </div>
+      <div class="settings">
+        <label for="pwd-length">Password Length</label>
+        <input
+          type="number"
+          max="15"
+          min="8"
+          name="passwordLength"
+          id="pwd-length"
+        />
+      </div>
+      <div class="settings">
+        <label for="pwd-uppercase">Include Uppercase Letters</label>
+        <input type="checkbox" name="passwordUppercase" id="pwd-uppercase" />
+      </div>
+      <div class="settings">
+        <label for="pwd-lowercase">Include Lowercase Letters</label>
+        <input type="checkbox" name="passwordLowercase" id="pwd-lowercase" />
+      </div>
+      <div class="settings">
+        <label for="pwd-numbers">Include numbers</label>
+        <input type="checkbox" name="passwordNumbers" id="pwd-numbers" />
+      </div>
+      <div class="settings">
+        <label for="pwd-symbols">Include Symbols</label>
+        <input type="checkbox" name="passwordSymbols" id="pwd-symbols" />
+      </div>
+      <button id="generate-btn">Generate Password</button>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
