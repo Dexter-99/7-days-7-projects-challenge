@@ -12,7 +12,8 @@ export class AddTodo extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    this.props.onCreateTodo(this.state.title);
+    if (!this.state.title) return;
+    else this.props.onCreateTodo(this.state.title);
   };
   render() {
     return (
@@ -25,6 +26,7 @@ export class AddTodo extends Component {
             className="form-control mb-3"
             value={this.state.title}
             onChange={this.onChange}
+            required
           />
           <input
             type="submit"

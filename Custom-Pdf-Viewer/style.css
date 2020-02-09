@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+.top-bar {
+  padding: 1.5rem;
+  background: #ee6e73;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.logo {
+  font-size: 2rem;
+  padding-top: 1rem;
+  text-align: center;
+  color: white;
+  vertical-align: baseline;
+}
+#buttons {
+  padding: 0.6rem 1rem;
+}
+.btn {
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  background-color: royalblue;
+  color: white;
+  transition: all 500ms ease;
+}
+.btn:hover {
+  background-color: #448aff;
+}
+.fas {
+  margin: 0.5rem;
+}
+.page-no {
+  padding-top: 1.5rem;
+}
+canvas {
+  height: 100%;
+  width: 100%;
+}
+.error {
+  padding: 1.5rem;
+  background: red;
+  display: none;
+}
