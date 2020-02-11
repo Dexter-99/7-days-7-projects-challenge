@@ -62,7 +62,8 @@ func register(w http.ResponseWriter, r *http.Request) {
 				Interests: r.FormValue("interests"),
 			}
 			fmt.Print(data)
-			// database.Insertintodb(cl, data)
+			database.Insertintodb(cl, data)
+			http.Redirect(w,r,"/Congrats",302)
 
 		}
 	}
