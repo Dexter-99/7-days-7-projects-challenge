@@ -15,7 +15,7 @@ var cl *mongo.Collection
 var c *mongo.Client
 
 func init() {
-cl,c=database.Createdb()
+	cl, c = database.Createdb()
 }
 
 func main() {
@@ -53,17 +53,19 @@ func register(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		{
 			fmt.Println(" lets see if it works ")
+			r.ParseForm()
 			data := database.Data{
+
 				Name:      r.FormValue("username"),
 				Email:     r.FormValue("email"),
 				Course:    r.FormValue("course"),
 				PhoneNo:   r.FormValue("phone"),
 				Year:      r.FormValue("year"),
-				Interests: r.FormValue("interests"),
+				Interests: r.Form["interests"],
 			}
 			fmt.Print(data)
 			database.Insertintodb(cl, data)
-			http.Redirect(w,r,"/Congrats",302)
+			http.Redirect(w, r, "/Congrats", 302)
 
 		}
 	}

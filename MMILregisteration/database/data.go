@@ -7,5 +7,5 @@ Email string
 Course string
 PhoneNo string
 Year string
-Interests string
+Interests []string
 }
