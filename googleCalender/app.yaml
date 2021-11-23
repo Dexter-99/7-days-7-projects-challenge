@@ -1,4 +1,4 @@
-runtime: go117
+runtime: go115
 api_version: go1
 env: standard
 handlers:
