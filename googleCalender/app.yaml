@@ -1,6 +1,5 @@
 runtime: go115
-api_version: go1
 env: standard
-handlers:
-- url: /.*
-  script: main.go
+# handlers:
+# - url: /.*
+#   script: main.go
