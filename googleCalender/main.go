@@ -12,6 +12,8 @@ import (
 func main() {
 	fmt.Println("ok running")
 	r := mux.NewRouter()
+	key := os.Getenv("secret key")
+	fmt.Println(key)
 	headers := handlers.AllowedHeaders([]string{"Accept", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "Authorization"})
 	methods := handlers.AllowedMethods([]string{"POST", "GET", "PUT", "DELETE"})
 	origins := handlers.AllowedOrigins([]string{"*"})
