@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,9 +13,9 @@ import (
 	// "github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	fb "github.com/huandu/facebook"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
-	fb "github.com/huandu/facebook"
 )
 
 // Credentials which stores google ids.
@@ -49,13 +48,7 @@ func init() {
 	}
 	json.Unmarshal(file, &cred)
 
-	conf = &oauth2.Config{
-		ClientID:     cred.Cid,
-		ClientSecret: cred.Csecret,
-		RedirectURL:  "http://localhost:8000/auth",
-		Scopes:       []string{"email"},
-		Endpoint:     facebook.Endpoint,
-	}
+	
 }
 
 func getLoginURL(state string) string {
@@ -75,9 +68,17 @@ func getURL(w http.ResponseWriter, r *http.Request) {
 	type state struct {
 		S string
 	}
+	conf = &oauth2.Config{
+		ClientID:     cred.Cid,
+		ClientSecret: cred.Csecret,
+		RedirectURL:  "http://localhost:8000/auth",
+		Scopes:       []string{"email"},
+		Endpoint:     facebook.Endpoint,
+	}
 	var st state
 	hash := randToken()
 	st.S = getLoginURL(hash)
+	fmt.Println(st.S)
 	session, _ = store.Get(r, "session")
 	session.Values["state"] = hash
 	fmt.Print()
@@ -86,16 +87,7 @@ func getURL(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// json.NewEncoder(w).Encode(s)
-	t, err := template.ParseFiles("./index.html")
-	fmt.Println("okay")
-	if err != nil {
-		log.Fatal("Could not parse template files:", err)
-	}
-	er := t.Execute(w, st)
-	if er != nil {
-		log.Fatal("could not execute the files\n:", er)
-	}
+	http.Redirect(w, r, st.S, 302)
 }
 
 func auth(w http.ResponseWriter, r *http.Request) {
@@ -120,9 +112,9 @@ func auth(w http.ResponseWriter, r *http.Request) {
 	client := conf.Client(oauth2.NoContext, tok)
 	fbsession := &fb.Session{
 		HttpClient: client,
-		Version: "v7.0",
+		Version:    "v7.0",
 	}
 	res, _ := fbsession.Get("/me", nil)
-   fmt.Print(res)
+	fmt.Print(res)
 	w.WriteHeader(http.StatusOK)
 }

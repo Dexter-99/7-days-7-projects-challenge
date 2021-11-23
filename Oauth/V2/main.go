@@ -50,13 +50,15 @@ func randToken() string {
 }
 
 func init() {
+	// Reading the creds file and adding it into a structure.
 	file, err := ioutil.ReadFile("./creds.json")
 	if err != nil {
 		log.Printf("File error: %v\n", err)
 		os.Exit(1)
 	}
 	json.Unmarshal(file, &cred)
-
+ 
+	//Creating a configration to connect with AuthCodeURL
 	conf = &oauth2.Config{
 		ClientID:     cred.Cid,
 		ClientSecret: cred.Csecret,
